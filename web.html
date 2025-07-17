@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Halal Shop Online</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .typing-animation {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid white;
+      animation: typing 3s steps(30, end) infinite, blink-caret 0.75s step-end infinite;
+      font-weight: 300;
+      font-size: 4rem; /* বড় আর চিকন */
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 20ch; }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: white; }
+    }
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .product-card:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-image {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div id="root"></div>
+  <script type="text/babel">
+    const Navbar = () => (
+      <nav className="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-4 flex justify-center items-center sticky top-0 z-10 shadow-md">
+        <div className="text-2xl font-bold absolute left-6">THSO</div>
+        <div className="space-x-8">
+          <a href="#" className="hover:text-blue-200 transition duration-300">Home</a>
+          <a href="#" className="hover:text-blue-200 transition duration-300">Contact Us</a>
+        </div>
+      </nav>
+    );
+
+    const HeroSection = () => {
+      const [currentSlide, setCurrentSlide] = React.useState(0);
+      const slides = [
+        'img/slide1.jpg',
+        'img/slide2.jpg',
+        'img/slide3.jpg'
+      ];
+
+      React.useEffect(() => {
+        const interval = setInterval(() => {
+          setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }, 5000);
+        return () => clearInterval(interval);
+      }, []);
+
+      return (
+        <div className="relative w-full h-[600px] md:h-[800px] bg-cover bg-center overflow-hidden">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 bg-cover bg-center transition-all duration-1000 transform ${
+                index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+              }`}
+              style={{ backgroundImage: `url('${slide}')` }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40 flex flex-col justify-center items-center text-white">
+                <h1 className="typing-animation">Welcome To Our Shop</h1>
+                <h3>Feel free to shopping</h3>
+                <a href="#" className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 py-3 rounded-full hover:from-blue-700 hover:to-blue-900 transition duration-300 shadow-lg mt-6">
+                  Shop Now
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    };
+
+    const ProductCard = ({ name, price, image, orderLink }) => (
+      <div className="border rounded-xl p-5 bg-white shadow-sm hover:shadow-xl product-card transition duration-300 fade-in">
+        <img 
+          src={image} 
+          alt={name} 
+          className="product-image" 
+        />
+        <h3 className="text-lg font-semibold text-gray-800 mt-4">{name}</h3>
+        <p className="text-gray-600 mb-4">৳{price.toFixed(2)}</p>
+        <a href={orderLink || "#"} target="_blank" rel="noopener noreferrer" className="w-full inline-block text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+          Order Now
+        </a>
+      </div>
+    );
+
+    const HomePage = () => {
+      const products = [
+        { name: "Product 1", price: 299, image: "img/product1.jpg", orderLink: "https://www.facebook.com/share/1Pd7p97Bt5/" },
+        { name: "Product 2", price: 299, image: "img/product2.jpg", orderLink: "https://www.facebook.com/share/1Pd7p97Bt5/" },
+        { name: "Product 3", price: 299, image: "img/product3.jpg", orderLink: "https://www.facebook.com/share/1Pd7p97Bt5/" },
+        { name: "Product 4", price: 299, image: "img/product1.jpg", orderLink: "https://www.facebook.com/share/1Pd7p97Bt5/" },
+        { name: "Product 5", price: 299, image: "img/product2.jpg", orderLink: "https://www.facebook.com/share/1Pd7p97Bt5/" },
+        { name: "Product 6", price: 299, image: "img/product3.jpg", orderLink: "https://www.facebook.com/share/1Pd7p97Bt5/" },
+        { name: "Product 7", price: 299, image: "img/product1.jpg", orderLink: "https://www.facebook.com/share/1Pd7p97Bt5/" },
+        { name: "Product 8", price: 299, image: "img/product2.jpg", orderLink: "https://www.facebook.com/share/1Pd7p97Bt5/" },
+      ];
+
+      return (
+        <div>
+          <Navbar />
+          <HeroSection />
+          <div className="container py-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">Our Products</h1>
+            {/* মোবাইল এবং সব স্ক্রিনে ২ কলাম */}
+            <div className="grid grid-cols-2 gap-6">
+              {products.map((product, index) => (
+                <ProductCard key={index} {...product} />
+              ))}
+            </div>
+          </div>
+          <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white text-center p-6">
+            <p className="text-sm">© 2025 THSO. All rights reserved.</p>
+            <p className="text-sm mt-2">Contact: <a href="mailto:support@thasop.com" className="hover:underline">support@thasop.com</a> | Phone: +880123456789</p>
+            <div className="flex justify-center space-x-4 mt-4">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-300 transition">Facebook</a>
+              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="hover:text-blue-300 transition">WhatsApp</a>
+            </div>
+          </footer>
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<HomePage />);
+  </script>
+</body>
+</html>
